@@ -5,12 +5,15 @@
         <div class="card text-center shadow mb-5 bg-white rounded">
           <div class="card-header font-italic">
             by <%= @articles.user.username if @articles.user %>
+            
           </div>
           <div class="card-body">
             <div class="card-text text-left"><%= simple_format(@articles.description) %></div>
-            <%= link_to "Edit", edit_article_path(@articles), class: "btn btn-outline-info" %>
-            <%= link_to "Delete", article_path(@articles), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
-          </div>
+            <% if logged_in? && @articles.user == current_user %>
+              <%= link_to "Edit", edit_article_path(@articles), class: "btn btn-outline-info" %>
+              <%= link_to "Delete", article_path(@articles), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <% end %>
+              </div>
           <div class="card-footer text-muted">
             <small>Created <%= time_ago_in_words(@articles.created_at) %> ago, 
             edited <%= time_ago_in_words(@articles.updated_at) %> ago</small>
